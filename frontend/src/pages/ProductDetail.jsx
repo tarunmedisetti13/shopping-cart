@@ -61,7 +61,7 @@ const ProductDetail = () => {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 ">
 
           {/* Left Side Wrapper */}
-          <div className="md:sticky md:top-20 self-start ">
+          <div className="md:top-20 ">
             <div className="flex flex-col gap-8">
               {/* Images */}
               <div className="flex gap-4 bg-white shadow-md rounded-2xl p-4 h-100">

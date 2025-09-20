@@ -6,37 +6,49 @@ async function CreateUser(userDetails) {
     const user = new User(userDetails);
     return await user.save();
 }
-
 async function CheckEmail(email) {
     const user = await User.findOne({ email: email });
-    return user !== null;
+    if (!user) {
+        return null;
+    };
+    return user;
 }
-
 //get password by email
 async function getPasswordbyEmail(email) {
-    const passwordDoc = await User.findOne({ email: email }).select('password');
-    if (!passwordDoc) {
-        return null;
+    const user = await User.findOne({ email: email }).select('password');
+    if (!user) {
+        return false;
     }
-    return passwordDoc.password;
+    return user.password;
+}
+async function getUserInfo(id) {
+    const UserInfo = await User.findById(id);
+    return UserInfo;
+}
+async function updatePassword(id, password) {
+    const user = await User.findById(id);
+    user.password = password;
+    await user.save();
+    return true;
 }
 
-async function AddProductToWishlist(productId, email) {
+//-------products logic---------
+
+async function AddProductToWishlist(userId, productId) {
     const product = await Product.findById(productId);
     if (!product) {
         return { error: "Product not found" };
     }
     // Find the user by email
-    const user = await User.findOne({ email });
-    if (!user) {
-        return { error: "User not found" };
-    }
+    const user = await User.findById(id);
     // Avoid duplicates in wishlist
     if (!user.wishlist.includes(productId)) {
         user.wishlist.push(productId);
         await user.save();
     }
-
+    else {
+        return { error: "Product already added to your wishlist" };
+    }
     return user;
 }
 
@@ -125,7 +137,7 @@ async function ClearCart(email) {
 }
 
 module.exports = {
-    CreateUser, CheckEmail, getPasswordbyEmail,
+    CreateUser, CheckEmail, getUserInfo, getPasswordbyEmail, updatePassword,
     AddProductToWishlist,
     AddItemToCart,
     RemoveItemFromCart,

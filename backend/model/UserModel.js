@@ -4,11 +4,9 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    address: {
-        zipcode: { type: String },
-        country: { type: String },
-        city: { type: String },
-        street: { type: String }
+    preferences: {
+        categories: { type: [String], default: [] },
+        priceRange: { type: String, enum: ['Low', 'Medium', 'High'], default: 'Medium' }
     },
     role: { type: String, enum: ['customer', 'admin'], default: 'customer' },
     // Empty by default when signing up

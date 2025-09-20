@@ -4,7 +4,7 @@ const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
     price: { type: Number, required: true },
-    category: { type: String, enum: ['Mobiles & Tablets', 'Fashion', 'Electronics', 'Home & Furniture', 'TVs & Appliances', 'Books', 'Grocery', 'Others'], default: 'Others' },
+    category: { type: String, enum: ['Clothing', 'Electronics', 'Shooes & Footwear', 'Home & Furniture', 'TVs & Appliances', 'Books & Stationary', 'Beauty & Personal Care', 'Sports & Outdoor', 'Toys & Games', 'Others'], default: 'Others' },
     images: [
         {
             url: { type: String, required: true },

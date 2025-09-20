@@ -1,8 +1,7 @@
 const express = require('express');
 
 const userRouter = express.Router();
-const { checkPasswordByEmail,
-    createUser,
+const { loginUser, createUser, UserInfo, UpdatePassword,
     addProductToWishlist,
     addItemToCart,
     removeItemFromCart,
@@ -10,30 +9,20 @@ const { checkPasswordByEmail,
     updateItemQuantityFromCart,
     clearCart
 } = require('../controllers/UserController');
-//create a user
+const { User } = require('../model/UserModel');
+
+//user-routes
 userRouter.post('/create-user', createUser);
+userRouter.post('/login-user', loginUser);
+userRouter.get('/user-info/:id', UserInfo);
+userRouter.patch('/update-password/:id', UpdatePassword);
 
-
-//Check Email is in db
-
-//compare  req password and db password using Email
-userRouter.post('/verify-login', checkPasswordByEmail);
-//Add product to user wishlist
-userRouter.post('/add-to-wishlist', addProductToWishlist);
-
-//Add Product to user Cart List
+//product-routes
+userRouter.post('/add-to-wishlist/:userId/:productId', addProductToWishlist);
 userRouter.post('/add-to-cart', addItemToCart);
-
-//Add product to user wishlist
 userRouter.post('/remove-from-wishlist', removeItemFromWishlist);
-
-//Add Product to user Cart List
 userRouter.post('/remove-from-cart', removeItemFromCart);
-
-//Update Product Quantity in Cart 
 userRouter.put('/update-item-quantity', updateItemQuantityFromCart);
-
-//Clear Cart
 userRouter.delete('/clear-cart', clearCart);
 
 
